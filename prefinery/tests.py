@@ -7,7 +7,7 @@ import os
 def callback(request, tester):
     return HttpResponse()
 
-_keys = ['PREFINERY_URL', 'PREFINERY_KEY', 'PREFINERY_BETA_ID', 'PREFINERY_USE_SHORT_CODES']
+_keys = ['PREFINERY_SUBDOMAIN', 'PREFINERY_KEY', 'PREFINERY_BETA_ID', 'PREFINERY_USE_SHORT_CODES']
 _settings = {'PREFINERY_CALLBACK': callback}
 _settings.update({ k: os.environ[k] for k in _keys if k in os.environ })
 
