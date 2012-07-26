@@ -15,8 +15,8 @@ def signup(request):
     if tester is not None:
         callback = settings.PREFINERY_CALLBACK
         if type(callback) == str:
-            module_path, handler_name = callback.rsplit(".", 2)
-            module = __import__(mod_path, fromlist=[handler_name])
+            module_path, handler_name = callback.rsplit(".", 1)
+            module = __import__(module_path, fromlist=[handler_name])
             callback = getattr(module, handler_name)
         return callback(request, tester)
     else:

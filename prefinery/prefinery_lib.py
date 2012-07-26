@@ -8,7 +8,7 @@ if len(_missing_keys) >0:
     raise Exception("The following settings are missing: %s" % _missing_keys)
 
 def beta_url(path, extra=''):
-    url = settings.PREFINERY_URL+'betas/'+settings.PREFINERY_BETA_ID
+    url = settings.PREFINERY_URL+'betas/'+str(settings.PREFINERY_BETA_ID)
     url += path
     url += '?api_key='+settings.PREFINERY_KEY+'&'+extra
     return url  
