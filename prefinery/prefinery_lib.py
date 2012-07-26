@@ -2,6 +2,10 @@ import httplib2
 from xml.dom.minidom import parseString
 from django.conf import settings
 
+_keys = ['PREFINERY_URL', 'PREFINERY_KEY', 'PREFINERY_BETA_ID']
+_missing_keys = [k for k in _keys if not hasattr(settings, k)]
+if len(_missing_keys) >0:
+    raise Exception("The following settings are missing: %s" % _missing_keys)
 
 def beta_url(path, extra=''):
     url = settings.PREFINERY_URL+'betas/'+settings.PREFINERY_BETA_ID
