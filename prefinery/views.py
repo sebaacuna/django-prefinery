@@ -13,6 +13,11 @@ def signup(request):
     tester_id = lib.get_tester_id_by_email(email)
     tester = lib.verify_code(tester_id, code)
     if tester is not None:
-        return settings.PREFINERY_CALLBACK(request, tester)
+        callback = settings.PREFINERY_CALLBACK
+        if type(callback) == str:
+            module_path, handler_name = callback.rsplit(".", 2)
+            module = __import__(mod_path, fromlist=[handler_name])
+            callback = getattr(module, handler_name)
+        return callback(request, tester)
     else:
         return HttpResponseForbidden('Code invalid')

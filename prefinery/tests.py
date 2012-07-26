@@ -4,8 +4,11 @@ from django.http import HttpResponse
 import prefinery_lib as utils
 import os
 
+def callback(request, tester):
+    return HttpResponse()
+
 _keys = ['PREFINERY_URL', 'PREFINERY_KEY', 'PREFINERY_BETA_ID', 'PREFINERY_USE_SHORT_CODES']
-_settings = {'PREFINERY_CALLBACK': lambda request,tester: HttpResponse()}
+_settings = {'PREFINERY_CALLBACK': callback}
 _settings.update({ k: os.environ[k] for k in _keys if k in os.environ })
 
 TEST_EMAIL = 'django-prefinery@test.com'
@@ -57,3 +60,8 @@ class SignUpTest(BaseTest):
         url = '/signup?email=%s&code=%s' % (TEST_EMAIL, code)
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 403)
+
+
+@override_settings(PREFINERY_CALLBACK="prefinery.tests.callback")
+class SignUpTestWithCallbackPath(SignUpTest):
+    pass
