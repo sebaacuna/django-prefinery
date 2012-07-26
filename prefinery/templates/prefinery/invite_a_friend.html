@@ -1,0 +1,18 @@
+{% load prefinery_tags %}
+{% if request.user.is_authenticated %}
+    <script type="text/javascript" src="https://www.prefinery.com/javascripts/widget.js"></script>
+    <script type='text/javascript' charset='utf-8'>
+      var invite_a_friend_options = {
+        account: "{% prefinery_subdomain %}",
+        beta_id: "{% prefinery_beta_id %}",
+        // Show the Invite-a-Friend tab on the screen (true/false)
+        show_tab: true,
+        // If you don't want to install the tab, you can use your own link to open the widget.
+        link_id: "prefinery_invite_a_friend_link",
+        // The tester_hash is simply a SHA1 hex digest of your secret invitation decoder key
+        // followed by the logged in user's e-mail address.
+        tester_hash: "{% tester_hash tester_email|default:request.user.email %}"
+      };
+      Prefinery.invite_a_friend(invite_a_friend_options);
+    </script>
+{% endif %}
