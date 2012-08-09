@@ -27,6 +27,19 @@ def delete_tester(id):
     resp, content = h.request(url, 'DELETE') 
     return resp
 
+def get_tester_friend_invitations_count(tester_email):
+    h = httplib2.Http()
+    url = beta_url('/testers.xml', 'email='+tester_email)
+    resp, content = h.request(url) 
+    try:
+        xml = parseString(content)
+        count = xml.getElementsByTagName('friend-invitations-count')[0]
+        for node in count.childNodes:
+            if node.data:
+                return node.data
+    except Exception as e:
+        return None
+
 def get_tester_id_by_email(tester_email):
     h = httplib2.Http()
     url = beta_url('/testers.xml', 'email='+tester_email)
