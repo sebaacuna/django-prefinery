@@ -18,6 +18,6 @@ def signup(request):
             module_path, handler_name = callback.rsplit(".", 1)
             module = __import__(module_path, fromlist=[handler_name])
             callback = getattr(module, handler_name)
-        return callback(request, email, code)
+        return callback(request, tester_id, email, code)
     else:
         return HttpResponseForbidden('Code invalid')

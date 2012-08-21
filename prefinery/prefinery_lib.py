@@ -27,9 +27,9 @@ def delete_tester(id):
     resp, content = h.request(url, 'DELETE') 
     return resp
 
-def get_tester_friend_invitations_remaining(tester_email):
+def get_tester_friend_invitations_remaining(tester_id):
     h = httplib2.Http()
-    url = beta_url('/testers.xml', 'email='+tester_email)
+    url = beta_url('/testers/'+str(tester_id)+'.xml')
     resp, content = h.request(url) 
     try:
         xml = parseString(content)
@@ -81,7 +81,7 @@ def verify_code(tester_id, code):
 def set_tester_status(tester_id, status):
     xml = '<?xml version="1.0" encoding="UTF-8"?><tester><status>'+status+'</status></tester>'
     h = httplib2.Http()
-    url = beta_url('/testers/'+tester_id+'.xml')
+    url = beta_url('/testers/'+str(tester_id)+'.xml')
     headers = {'Content-type': 'text/xml'}
     resp, content = h.request(url, 'PUT', headers=headers, body=xml) 
     if resp.status == 200:
